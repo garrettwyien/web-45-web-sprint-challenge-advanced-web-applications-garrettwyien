@@ -13,7 +13,7 @@ const Login = () => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
 
-  const handleChange=e=>{
+  const handleChange=(e)=>{
     setUserInfo({
       ...userInfo,
       [e.target.name]: e.target.value
@@ -43,9 +43,9 @@ const Login = () => {
         <h2>Login</h2>
         <form onSubmit={login}>
           Username:
-          <input type="text" id="username" onChange={handleChange} placeholder="username" value={userInfo.username}/>
+          <input type="text" name="username" id="username" onChange={handleChange} placeholder="username" value={userInfo.username}/>
           Password:
-          <input type="password" id="password" onChange={handleChange} value={userInfo.password}/>
+          <input type="password" name="password" id="password" onChange={handleChange} value={userInfo.password}/>
           <button id="submit">Submit</button>
         </form>
       </div>
