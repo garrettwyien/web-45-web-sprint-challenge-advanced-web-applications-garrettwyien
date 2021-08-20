@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
@@ -6,9 +6,11 @@ const initialUserInfo = {
   username: '',
   password: '',
 };
+const initialError = '';
 
 const Login = () => {
   const [userInfo, setUserInfo] = useState(initialUserInfo);
+  const [error, setError] = useState(initialError);
   const { push } = useHistory();
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
@@ -22,19 +24,26 @@ const Login = () => {
 
   const login=e=>{
     e.preventDefault();
-    axios.post(`http://localhost:5000/api/login`, userInfo)
-    .then(res=>{
-      console.log(res);
-      localStorage.setItem("token", res.data.token);
-      push('/bubblepage');
-    })
-    .catch(err=>{
-      console.log(err);
-    });
+    if (!userInfo.username || !userInfo.password ) { return (
+      setError('Username or Password not valid.')
+    );} else {
+      axios.post(`http://localhost:5000/api/login`, userInfo)
+      .then(res=>{
+        console.log(res);
+        localStorage.setItem("token", res.data.token);
+        push('/bubblepage');
+      })
+      .catch(err=>{
+        console.log(err);
+      });
+    };
   };
 
-  const error = "";
+
   //replace with error state
+
+  
+
 
   return (
     <div>
