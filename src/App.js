@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-
+import PrivateRoute from "./components/PrivateRoute";
 import Login from "./components/Login";
+import BubblePage from "./components/BubblePage";
 import "./styles.scss";
 
 function App() {
@@ -10,12 +11,14 @@ function App() {
       <div className="App">
         <header>
           Color Picker Sprint Challenge
-          <a data-testid="logoutButton" href="#">logout</a>
+          <a data-testid="logoutButton" href="/logout">logout</a>
           <Link to="/login">Login</Link>
         </header>
         <Switch>
           <Route exact path="/" component={Login}/>
           <Route path="/login" component={Login}/>
+          <PrivateRoute path="/bubblepage" component={BubblePage}/>
+          <PrivateRoute path="/logout" component={Logout}/>
         </Switch>
       </div>
     </Router>
