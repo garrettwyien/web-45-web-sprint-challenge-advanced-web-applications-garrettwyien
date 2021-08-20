@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Login from "./components/Login";
+import Logout from "./components/Logout";
 import BubblePage from "./components/BubblePage";
 import "./styles.scss";
 
