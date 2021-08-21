@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
-// import fetchColorService from '../services/fetchColorService';
+import fetchColorService from '../services/fetchColorService';
+import axiosWithAuth from "../helpers/axiosWithAuth";
 import axios from "axios";
 
 
@@ -11,15 +12,16 @@ const BubblePage = () => {
   const [editing, setEditing] = useState(false);
 
   useEffect(()=>{
-      const token=localStorage.getItem("token");
-      axios.get('http://localhost:5000/api/colors', {
-          headers: {
-              authorization: token
-          }})
-          .then(res=>{
-            setColors(res.data);
-          })
-          .catch(err=>{console.log(err)})
+      // const token=localStorage.getItem("token");
+      // axios.get('http://localhost:5000/api/colors', {
+      //     headers: {
+      //         authorization: token
+      //     }})
+      //     .then(res=>{
+      //       setColors(res.data);
+      //     })
+      //     .catch(err=>{console.log(err)})
+      console.log(fetchColorService());
   }, []);
 
   const toggleEdit = (value) => {
@@ -27,16 +29,28 @@ const BubblePage = () => {
   };
 
   const saveEdit = (editColor) => {
-    const token=localStorage.getItem("token");
-      axios.put('http://localhost:5000/api/colors/:id', editColor, {
+    // console.log(editColor);
+    // const token=localStorage.getItem("token");
+    //   axios.put('http://localhost:5000/api/colors/:id', editColor, {
+    //       headers: {
+    //           authorization: token
+    //       }})
+    //       .then(res=>{
+            
+    //       })
+    //       .catch(err=>{console.log(err)})
+    axiosWithAuth()
+      .put('/colors/id', editColor)
+      .then(res=>{
+        const token=localStorage.getItem("token");
+        axios.get('http://localhost:5000/api/colors', {
           headers: {
               authorization: token
           }})
           .then(res=>{
-            console.log(res.data)
-          })
-          .catch(err=>{console.log(err)})
-  };
+            setColors(res.data);
+      })
+  })};
 
   const deleteColor = (colorToDelete) => {
     const token=localStorage.getItem("token");
