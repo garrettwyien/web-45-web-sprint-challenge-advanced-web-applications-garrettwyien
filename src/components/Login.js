@@ -31,10 +31,12 @@ const Login = () => {
       .then(res=>{
         console.log(res);
         localStorage.setItem("token", res.data.token);
+        console.log(res.data.token);
         push('/bubblepage');
       })
       .catch(err=>{
         console.log(err);
+        setError('Username or Password not valid.')
       });
     };
   };
