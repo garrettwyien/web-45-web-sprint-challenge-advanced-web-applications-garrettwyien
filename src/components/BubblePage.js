@@ -1,27 +1,17 @@
 import React, { useEffect, useState } from "react";
-
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
 import fetchColorService from '../services/fetchColorService';
 import axiosWithAuth from "../helpers/axiosWithAuth";
-import axios from "axios";
 
 
 const BubblePage = () => {
   const [colors, setColors] = useState([]);
   const [editing, setEditing] = useState(false);
 
+
   useEffect(()=>{
-      // const token=localStorage.getItem("token");
-      // axios.get('http://localhost:5000/api/colors', {
-      //     headers: {
-      //         authorization: token
-      //     }})
-      //     .then(res=>{
-      //       setColors(res.data);
-      //     })
-      //     .catch(err=>{console.log(err)})
-      console.log(fetchColorService());
+    fetchColorService(setColors)
   }, []);
 
   const toggleEdit = (value) => {
@@ -29,41 +19,22 @@ const BubblePage = () => {
   };
 
   const saveEdit = (editColor) => {
-    // console.log(editColor);
-    // const token=localStorage.getItem("token");
-    //   axios.put('http://localhost:5000/api/colors/:id', editColor, {
-    //       headers: {
-    //           authorization: token
-    //       }})
-    //       .then(res=>{
-            
-    //       })
-    //       .catch(err=>{console.log(err)})
     axiosWithAuth()
-      .put('/colors/id', editColor)
+      .put('/colors/:id', editColor)
       .then(res=>{
-        const token=localStorage.getItem("token");
-        axios.get('http://localhost:5000/api/colors', {
-          headers: {
-              authorization: token
-          }})
-          .then(res=>{
-            setColors(res.data);
+        console.log(res);
+        console.log(colors);
       })
-  })};
+  };
 
   const deleteColor = (colorToDelete) => {
-    const token=localStorage.getItem("token");
-      axios.delete('http://localhost:5000/api/colors/:id', colorToDelete, {
-          headers: {
-              authorization: token
-          }})
-          .then(res=>{
-            console.log(res)
-          })
-          .catch(err=>{console.log(err)})
+    axiosWithAuth()
+      .delete('/colors/:id', colorToDelete)
+      .then(res=>{
+        console.log(res);
+      })
   };
-//I do not understand why the deleteColor function returns a 403 error, but the saveEdit function does not. 
+//I got stuck here trying to update the state after a color was edited or deleted. In the guided project and module project, res.data returned the entire array of state. In this sprint, res.data only returns the single color. I spent something like 6 hours looking at this unable to figure it out. 
   return (
     <div className="container">
       <ColorList colors={colors} editing={editing} toggleEdit={toggleEdit} saveEdit={saveEdit} deleteColor={deleteColor}/>
