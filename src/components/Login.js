@@ -30,8 +30,7 @@ const Login = () => {
       axios.post(`http://localhost:5000/api/login`, userInfo)
       .then(res=>{
         console.log(res);
-        localStorage.setItem("token", res.data.token);
-        console.log(res.data.token);
+        localStorage.setItem("token", res.data.payload);
         push('/bubblepage');
       })
       .catch(err=>{

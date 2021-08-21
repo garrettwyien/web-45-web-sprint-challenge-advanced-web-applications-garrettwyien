@@ -5,11 +5,12 @@ import { Redirect } from 'react-router-dom';
 const Logout = ()=>{
     useEffect(()=>{
         axiosWithAuth()
-        .post('/logout')
-        .then(res=>{
-            localStorage.removeItem("token");
+            .post('/logout')
+            .then(res=>{
+                localStorage.removeItem("token");
+                console.log(res);
         });
-    }, []);
+    },[]);
     return(
         <Redirect to="/"/>
     );
